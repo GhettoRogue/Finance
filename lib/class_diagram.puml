@@ -20,8 +20,15 @@ TypeOperation <--* Category
 class Category {
 - name : string
 - type : TypeOperation
+- isDelete : bool
 
 + Category(name : string, type : TypeOperation)
+
++ GetName() : string
++ GetType() : TypeOperation
++ IsDelete() : bool
+
++ Delete() : void
 }
 
 Category <--o CategoryDirectory
@@ -30,8 +37,11 @@ class CategoryDirectory {
 
 + CategoryDirectory()
 
-+ AddCategory(name : string, type : TypeOperation) : void
-+ DelCategory(name : string) : void
++ AddCategory(name : string, type : TypeOperation) : bool
++ DelCategory(name : string) : bool
+
++ Find(name : string) : Category
++ GetAll() : Category[]
 }
 
 Date <--* Operation
@@ -42,36 +52,53 @@ class Operation {
 - date : Date
 - sum : double
 - category : Category
+- isDelete : bool
 
 + Operation(type : TypeOperation, date : Date, sum : double, category : Category)
 
 + GetDate() : Date
 + GetSum() : double
++ GetType() : TypeOperation
++ GetCategory() : Category
++ IsDelete() : bool
+
++ Delete() : void
 }
 
 Operation <--o Wallet
 class Wallet {
 - name : string
 - balance : double
+- isDelete : bool
 
 - listOfDebit : Operation[]
 - listOfCredit : Operation[]
 
 + Wallet(name : string, balance : double)
 
-+ Income(type : TypeOperation, date : Date, sum : double, category : Category) : void
-+ Expense(type : TypeOperation, date : Date, sum : double, category : Category) : void
++ Income(type : TypeOperation, date : Date, sum : double, category : Category) : bool
++ Expense(type : TypeOperation, date : Date, sum : double, category : Category) : bool
+
++ Delete() : void
++ IsDelete() : bool
 }
 
 Wallet <--o User
 class User {
 - name : string
 - wallets : Wallet[]
+- isDelete : bool
 
 + User(name : string)
 
-+ AddWallet(name : string, balance : double) : void
-+ DelWallet(name : string) : void
++ AddWallet(name : string, balance : double) : bool
++ DelWallet(name : string) : bool
+
++ Find(name : string) : Wallet
++ GetAll() : Wallet[]
+
++ Delete() : void
++ IsDelete() : bool
 }
 
 @enduml
