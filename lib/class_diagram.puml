@@ -1,0 +1,77 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Date {
+- year : int
+- month : int
+- day : int
+
++ Date(year : int, month : int, day : int)
+
++ ToString() : string
+}
+
+enum TypeOperation {
+DEBIT,
+CREDIT
+}
+
+TypeOperation <--* Category
+class Category {
+- name : string
+- type : TypeOperation
+
++ Category(name : string, type : TypeOperation)
+}
+
+Category <--o CategoryDirectory
+class CategoryDirectory {
+- categories : Category[]
+
++ CategoryDirectory()
+
++ AddCategory(name : string, type : TypeOperation) : void
++ DelCategory(name : string) : void
+}
+
+Date <--* Operation
+TypeOperation <--* Operation
+Category <--* Operation
+class Operation {
+- type : TypeOperation
+- date : Date
+- sum : double
+- category : Category
+
++ Operation(type : TypeOperation, date : Date, sum : double, category : Category)
+
++ GetDate() : Date
++ GetSum() : double
+}
+
+Operation <--o Wallet
+class Wallet {
+- name : string
+- balance : double
+
+- listOfDebit : Operation[]
+- listOfCredit : Operation[]
+
++ Wallet(name : string, balance : double)
+
++ Income(type : TypeOperation, date : Date, sum : double, category : Category) : void
++ Expense(type : TypeOperation, date : Date, sum : double, category : Category) : void
+}
+
+Wallet <--o User
+class User {
+- name : string
+- wallets : Wallet[]
+
++ User(name : string)
+
++ AddWallet(name : string, balance : double) : void
++ DelWallet(name : string) : void
+}
+
+@enduml
